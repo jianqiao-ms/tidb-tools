@@ -1,0 +1,15 @@
+#Placed in /usr/lib/systemd/system
+[Unit]
+Description=pd-server of TiDB
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/pd.conf
+ExecStart=/bin/sh -c '${PDSRV_BIN} -L="${LOGLEVEL}" --log-file="${LOGFILE}" \
+		--name="${NAME}" --data-dir="${DATA_DIR}" \
+		--client-urls="http://${BIND}:2379" \
+		--peer-urls="http://${BIND}:2380" \
+		--initial-cluster="${OTHER_PDS},${NAME}=http://${BIND}:2380"'
+[Install]
+WantedBy=multi-user.target
