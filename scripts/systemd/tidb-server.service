@@ -1,0 +1,11 @@
+[Unit]
+Description=tidb-server of TiDB
+After=pd-server.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/tidb.conf
+ExecStart=/bin/sh -c '${TIDB_BIN} -L="${LOGLEVEL}" --log-file="${LOGFILE}" \
+                --store="${ENGINE}" --path="${PDCLUSTER}"'
+[Install]
+WantedBy=multi-user.target
