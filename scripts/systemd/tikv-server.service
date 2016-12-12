@@ -1,0 +1,12 @@
+[Unit]
+Description=tikv-server of TiDB
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/tikv.conf
+ExecStart=/bin/sh -c '${TIKV_BIN} -L="${LOGLEVEL}" --log-file="${LOGFILE}" \
+		--pd="${PDCLUSTER}" --store="${DATADIR}" \
+        --addr="${BIND}:20160"'
+[Install]
+WantedBy=multi-user.target
